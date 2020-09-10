@@ -77,13 +77,14 @@ export default function Home() {
         }
 
         h1 {
-          color: ${colors.secondary};
+          color: ${colors.primary};
           font-weight: 800;
+          font-size: 32px;
           margin-bottom: 16px;
         }
 
         h2 {
-          color: ${colors.primary};
+          color: ${colors.secondary};
           font-size: 21px;
           margin: 0;
         }

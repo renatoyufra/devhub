@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
-import AppLayout from "../components/AppLayout";
-import { colors } from "../styles/theme";
-import Button from "../components/Button";
-import GitHub from "../components/Icons/GitHub";
 
-import { loginWithGithub, onAuthStateChanged } from "../firebase/client";
+import AppLayout from "components/AppLayout";
+import Avatar from "components/Avatar";
+import Button from "components/Button";
+import GitHub from "components/Icons/GitHub";
+
+import { colors } from "styles/theme";
+
+import { loginWithGithub, onAuthStateChanged } from "firebase/client";
 
 export default function Home() {
   // manejaremos 3 estados undefined // null // object
@@ -47,8 +50,11 @@ export default function Home() {
             )}
             {user && user.avatar && (
               <div>
-                <img src={user.avatar} alt="avatar" />
-                <strong>{user.username}</strong>
+                <Avatar
+                  src={user.avatar}
+                  alt={user.username}
+                  text={user.username}
+                />
               </div>
             )}
           </div>

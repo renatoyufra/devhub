@@ -1,9 +1,9 @@
-import css from 'styled-jsx/css'
+import css from "styled-jsx/css";
 
-import { breakpoints, fonts, colors } from '../../styles/theme'
-import { addOpacityToColor } from '../../styles/utils'
+import { breakpoints, fonts, colors } from "../../styles/theme";
+import { addOpacityToColor } from "../../styles/utils";
 
-const backgroundColor = addOpacityToColor(colors.primary, 0.3)
+const backgroundColor = addOpacityToColor(colors.primary, 0.3);
 
 export const globalStyles = css.global`
     html,
@@ -21,26 +21,27 @@ export const globalStyles = css.global`
     * {
         box- sizing: border - box;
     }
-`
+`;
 
 export default css`
-    div {
-        display: grid;
-        height: 100vh;
-        place-items: center;
-    }
+  div {
+    display: grid;
+    height: 100vh;
+    place-items: center;
+  }
 
+  main {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    height: 100 %;
+    width: 100 %;
+  }
+
+  @media (min-width: ${breakpoints.mobile}) {
     main {
-        background: #fff;
-        border-radius: 10px;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, .1);
-        height: 100 %;
-        width: 100 %;
+      height: 90vh;
+      width: ${breakpoints.mobile};
     }
-
-    @media(min-width: ${ breakpoints.mobile}) {
-        main {
-            height: 90vh;
-            width: ${ breakpoints.mobile};
-        }
-    } `
+  }
+`;

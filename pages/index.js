@@ -1,28 +1,27 @@
-import { useEffect, useState } from 'react'
-import Head from 'next/head'
-import AppLayout from '../components/AppLayout'
-import { colors } from '../styles/theme'
-import Button from '../components/Button'
-import GitHub from '../components/Icons/GitHub'
+import { useEffect, useState } from "react";
+import Head from "next/head";
+import AppLayout from "../components/AppLayout";
+import { colors } from "../styles/theme";
+import Button from "../components/Button";
+import GitHub from "../components/Icons/GitHub";
 
-import { loginWithGithub, onAuthStateChanged } from '../firebase/client'
+import { loginWithGithub, onAuthStateChanged } from "../firebase/client";
 
 export default function Home() {
-
   // manejaremos 3 estados undefined // null // object
-  const [user, setUser] = useState(undefined)
+  const [user, setUser] = useState(undefined);
 
   useEffect(() => {
-    onAuthStateChanged(user => setUser(user))  // the same onAuthStateChanged(setUser)  
-  }, [])
+    onAuthStateChanged((user) => setUser(user)); // the same onAuthStateChanged(setUser)
+  }, []);
   // user => {setUser(user)}
   const handleClick = () => {
     loginWithGithub()
       .then(setUser)
-      .catch(err => {
-        console.log(err)
-      })
-  }
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <>
@@ -36,21 +35,22 @@ export default function Home() {
           <img src="/devhub-logo.png" alt="Logo" />
 
           <h1>DevHub</h1>
-          <h2>Talk about development <br /> with developers 🐱‍👤</h2>
+          <h2>
+            Talk about development <br /> with developers 🐱‍👤
+          </h2>
           <div>
-            {
-              user === null &&
+            {user === null && (
               <Button onClick={handleClick}>
-                <GitHub width={24} height={24} fill='#fff' />
-                  Login with GitHub
-                </Button>
-            }
-            {
-              user && user.avatar && <div>
+                <GitHub width={24} height={24} fill="#fff" />
+                Login with GitHub
+              </Button>
+            )}
+            {user && user.avatar && (
+              <div>
                 <img src={user.avatar} alt="avatar" />
                 <strong>{user.username}</strong>
               </div>
-            }
+            )}
           </div>
         </section>
       </AppLayout>
@@ -62,7 +62,7 @@ export default function Home() {
         img {
           width: 120px;
         }
-        
+
         section {
           display: grid;
           height: 100%;
@@ -83,5 +83,5 @@ export default function Home() {
         }
       `}</style>
     </>
-  )
+  );
 }

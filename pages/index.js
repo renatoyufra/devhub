@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Head from "next/head";
 
 import AppLayout from "components/AppLayout";
-import Avatar from "components/Avatar";
 import Button from "components/Button";
 import GitHub from "components/Icons/GitHub";
 
@@ -10,20 +9,31 @@ import { colors } from "styles/theme";
 
 import { loginWithGithub, onAuthStateChanged } from "firebase/client";
 
+import { useRouter } from "next/router";
+
+const USER_STATES = {
+  NOT_LOGGED: null,
+  NOT_KNOWN: undefined,
+};
+
 export default function Home() {
   // manejaremos 3 estados undefined // null // object
-  const [user, setUser] = useState(undefined);
+  const [user, setUser] = useState(USER_STATES.NOT_KNOWN);
+  const router = useRouter();
 
   useEffect(() => {
     onAuthStateChanged((user) => setUser(user)); // the same onAuthStateChanged(setUser)
   }, []);
   // user => {setUser(user)}
+
+  useEffect(() => {
+    user && router.replace("/home");
+  }, [user]);
+
   const handleClick = () => {
-    loginWithGithub()
-      .then(setUser)
-      .catch((err) => {
-        console.log(err);
-      });
+    loginWithGithub().catch((err) => {
+      console.log(err);
+    });
   };
 
   return (
@@ -42,21 +52,13 @@ export default function Home() {
             Talk about development <br /> with developers 🐱‍👤
           </h2>
           <div>
-            {user === null && (
+            {user === USER_STATES.NOT_LOGGED && (
               <Button onClick={handleClick}>
                 <GitHub width={24} height={24} fill="#fff" />
                 Login with GitHub
               </Button>
             )}
-            {user && user.avatar && (
-              <div>
-                <Avatar
-                  src={user.avatar}
-                  alt={user.username}
-                  text={user.username}
-                />
-              </div>
-            )}
+            {user === USER_STATES.NOT_KNOWN && <img src="./spinner.gif" />}
           </div>
         </section>
       </AppLayout>
